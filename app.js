@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
     res.header("Access-Control-Allow-Methods", "GET, POST, HEAD, OPTIONS, PUT, PATCH, DELETE");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-access-token, x-refresh-token, _id");
     res.header('Access-Control-Expose-Headers', 'x-access-token, x-refresh-token');
     next();
 });
@@ -29,7 +29,7 @@ let authenticate = (req, res, next) => {
     jwt.verify(token, User.getJWTSecret(), (err, decoded) => {
         if (err) {
             // there was an error
-            // jwt is invalid - * DO NOT AUTHNTICATE *
+            // jwt is invalid - * DO NOT AUTHENTICATE *
             res.status(401).send(err);
         } else {
             // jwt is valid
